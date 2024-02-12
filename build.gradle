@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.0'
+}
+
+test {
+    // Задаем основной класс для запуска тестов
+    testClassesDirs = sourceSets.test.output.classesDirs
+    // Задаем classpath для тестирования
+    classpath = sourceSets.test.runtimeClasspath
+}
+
+// Конфигурация для выполнения приложения
+task runApp(type: JavaExec) {
+    // Определяем класс, который будет выполняться
+    main = 'TestRunner'
+    // Задаем classpath для приложения
+    classpath sourceSets.main.runtimeClasspath
+}
+
+// Перед выполнением runApp выполним тесты
+runApp.dependsOn test
